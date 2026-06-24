@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ahmed — Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  html,body{background:#0C0C0C;font-family:'Kanit',sans-serif;color:#D7E2EA;overflow-x:hidden;}
+  ::selection{background:#BE4C00;color:#fff;}
+
+  /* Gradient heading */
+  .hero-heading{
+    background:linear-gradient(180deg,#646973 0%,#BBCCD7 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+    font-weight:900;text-transform:uppercase;line-height:1;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    display:flex;justify-content:space-between;
+    padding:1.5rem 2.5rem;position:relative;z-index:20;
+  }
+  nav button{
+    background:none;border:none;cursor:pointer;
+    color:#D7E2EA;font-family:'Kanit',sans-serif;
+    font-weight:500;text-transform:uppercase;letter-spacing:.1em;
+    font-size:clamp(.75rem,1.5vw,1.4rem);
+    opacity:1;transition:opacity .2s;
+  }
+  nav button:hover{opacity:.5;}
+
+  /* ---------- HERO ---------- */
+  #hero{
+    height:100vh;width:100%;
+    display:flex;flex-direction:column;
+    overflow:hidden;position:relative;
+  }
+  .hero-title-wrap{overflow:hidden;width:100%;}
+  .hero-title{
+    font-size:clamp(3rem,17.5vw,22rem);
+    font-weight:900;text-transform:uppercase;
+    letter-spacing:-.02em;line-height:.92;
+    white-space:nowrap;
+    background:linear-gradient(180deg,#646973 0%,#BBCCD7 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .hero-bottom{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    padding:0 2.5rem 2.5rem;position:relative;z-index:20;
+  }
+  .hero-desc{
+    font-weight:300;text-transform:uppercase;letter-spacing:.05em;
+    line-height:1.4;font-size:clamp(.7rem,1.4vw,1.5rem);
+    max-width:260px;color:#D7E2EA;
+  }
+  .hero-body{
+    flex:1;display:flex;flex-direction:column;
+    justify-content:space-between;padding-top:1.5rem;
+    padding-left:2.5rem;padding-right:2.5rem;position:relative;z-index:20;
+  }
+  /* Portrait */
+  .hero-portrait{
+    position:absolute;
+    left:50%;transform:translateX(-50%);
+    bottom:0;z-index:10;pointer-events:none;
+    width:clamp(220px,35vw,520px);
+    transition:transform .6s ease-in-out;
+  }
+  .hero-portrait img{width:100%;display:block;object-fit:cover;}
+
+  /* ---------- CONTACT BUTTON ---------- */
+  .contact-btn{
+    display:inline-block;
+    border-radius:9999px;
+    color:#fff;font-family:'Kanit',sans-serif;
+    font-weight:500;text-transform:uppercase;
+    letter-spacing:.12em;cursor:pointer;border:none;
+    padding:.75rem 2.5rem;font-size:clamp(.7rem,1.1vw,1rem);
+    background:linear-gradient(123deg,#18011F 7%,#B600A8 37%,#7621B0 72%,#BE4C00 100%);
+    box-shadow:0 4px 4px rgba(181,1,167,.25),4px 4px 12px #7721B1 inset;
+    outline:2px solid #fff;outline-offset:-3px;
+    transition:opacity .2s;
+  }
+  .contact-btn:hover{opacity:.85;}
+
+  /* ---------- MARQUEE ---------- */
+  #marquee-section{
+    background:#0C0C0C;
+    padding-top:clamp(5rem,10vw,10rem);
+    padding-bottom:2.5rem;
+    overflow:hidden;
+    display:flex;flex-direction:column;gap:.75rem;
+  }
+  .marquee-row{display:flex;gap:.75rem;white-space:nowrap;will-change:transform;}
+  .marquee-row img{
+    width:420px;height:270px;
+    border-radius:1rem;object-fit:cover;flex-shrink:0;
+  }
+
+  /* ---------- ABOUT ---------- */
+  #about{
+    position:relative;min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:5rem 2rem;overflow:hidden;
+  }
+  .about-title{
+    font-size:clamp(3rem,12vw,10rem);
+    text-align:center;margin-bottom:3rem;
+  }
+  .about-text{
+    color:#D7E2EA;font-weight:500;line-height:1.7;
+    max-width:560px;text-align:center;
+    font-size:clamp(.9rem,2vw,1.35rem);
+  }
+  .about-btn-wrap{margin-top:4rem;}
+  /* Decorative images */
+  .deco{position:absolute;z-index:0;pointer-events:none;}
+  .deco img{width:100%;display:block;object-fit:contain;}
+  .deco-tl{top:4%;left:4%;width:clamp(80px,13vw,210px);}
+  .deco-bl{bottom:8%;left:10%;width:clamp(70px,11vw,180px);}
+  .deco-tr{top:4%;right:4%;width:clamp(80px,13vw,210px);}
+  .deco-br{bottom:8%;right:10%;width:clamp(90px,14vw,220px);}
+  .about-content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;}
+
+  /* ---------- SKILLS ---------- */
+  #skills{
+    background:#fff;
+    border-radius:60px 60px 0 0;
+    padding:5rem 2.5rem clamp(4rem,8vw,8rem);
+    position:relative;z-index:20;
+  }
+  .skills-title{
+    color:#0C0C0C;font-weight:900;text-transform:uppercase;text-align:center;
+    font-size:clamp(3rem,12vw,10rem);line-height:1;margin-bottom:clamp(2rem,6vw,7rem);
+  }
+  .skills-list{max-width:900px;margin:0 auto;display:flex;flex-direction:column;}
+  .skill-item{
+    display:flex;flex-direction:row;align-items:center;
+    gap:clamp(1rem,4vw,3rem);
+    padding:clamp(1.5rem,3vw,3rem) 0;
+    border-bottom:.5px solid rgba(12,12,12,.15);
+  }
+  .skill-item:last-child{border-bottom:none;}
+  .skill-num{
+    color:#0C0C0C;font-weight:900;line-height:1;flex-shrink:0;
+    font-size:clamp(3rem,9vw,9rem);
+  }
+  .skill-info{display:flex;flex-direction:column;gap:.4rem;}
+  .skill-name{
+    color:#0C0C0C;font-weight:500;text-transform:uppercase;
+    font-size:clamp(.9rem,2.2vw,2.1rem);
+  }
+  .skill-desc{
+    color:#0C0C0C;opacity:.6;font-weight:300;line-height:1.6;
+    font-size:clamp(.8rem,1.5vw,1.25rem);max-width:600px;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  #projects{
+    background:#0C0C0C;
+    border-radius:60px 60px 0 0;
+    margin-top:-3rem;
+    position:relative;z-index:30;
+    padding-top:5rem;padding-bottom:8rem;
+  }
+  .projects-title{
+    font-size:clamp(3rem,12vw,10rem);text-align:center;
+    margin-bottom:clamp(2rem,5vw,5rem);
+  }
+  .project-sticky-container{position:relative;}
+  .project-card-wrap{
+    display:flex;align-items:center;justify-content:center;
+    min-height:85vh;
+    position:sticky;
+    padding:0 1rem;
+  }
+  .project-card{
+    width:100%;max-width:900px;
+    background:#0C0C0C;
+    border-radius:50px;
+    border:2px solid #D7E2EA;
+    padding:clamp(1rem,3vw,2rem);
+    position:relative;
+    transform-origin:top center;
+    transition:transform .1s linear;
+  }
+  .project-header{
+    display:flex;flex-direction:row;align-items:center;
+    justify-content:space-between;gap:1.5rem;
+    margin-bottom:1.5rem;
+  }
+  .project-header-left{display:flex;align-items:center;gap:clamp(1rem,3vw,2.5rem);}
+  .project-num{
+    color:#D7E2EA;font-weight:900;line-height:1;
+    font-size:clamp(3rem,7vw,7rem);
+  }
+  .project-meta{display:flex;flex-direction:column;}
+  .project-field{
+    display:inline-block;
+    color:#BE4C00;font-weight:600;text-transform:uppercase;
+    letter-spacing:.12em;font-size:.7rem;margin-bottom:.15rem;
+  }
+  .project-category{
+    color:#D7E2EA;opacity:.6;text-transform:uppercase;
+    font-weight:300;letter-spacing:.1em;font-size:.9rem;margin-bottom:.2rem;
+    display:block;
+  }
+  .project-video-thumb-link{
+    width:60%;position:relative;display:block;
+    border-radius:40px;overflow:hidden;
+    border:.5px solid rgba(255,255,255,.1);
+    flex-shrink:0;
+  }
+  .project-video-thumb-link .project-right-img{
+    width:100%;height:100%;object-fit:cover;
+    border-radius:0;border:none;display:block;
+  }
+  .play-overlay{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.35);
+    transition:background .2s;
+  }
+  .project-video-thumb-link:hover .play-overlay{background:rgba(0,0,0,.5);}
+  .play-btn{
+    width:64px;height:64px;border-radius:50%;
+    background:rgba(255,255,255,.9);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.5rem;color:#0C0C0C;
+    padding-left:4px;
+    transition:transform .2s,background .2s;
+  }
+  .project-video-thumb-link:hover .play-btn{transform:scale(1.1);background:#fff;}
+  .project-video-wrap{
+    width:100%;border-radius:40px;overflow:hidden;
+    border:.5px solid rgba(255,255,255,.1);aspect-ratio:16/9;
+  }
+  .project-video{width:100%;height:100%;display:block;}
+  .project-name{
+    color:#D7E2EA;font-weight:700;text-transform:uppercase;
+    font-size:clamp(1.2rem,3vw,2.5rem);line-height:1;
+  }
+  .live-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    border-radius:9999px;border:2px solid #D7E2EA;
+    color:#D7E2EA;font-family:'Kanit',sans-serif;
+    font-weight:500;text-transform:uppercase;letter-spacing:.12em;
+    padding:.7rem 2rem;font-size:.85rem;
+    text-decoration:none;transition:background .2s;
+    white-space:nowrap;flex-shrink:0;
+  }
+  .live-btn:hover{background:rgba(215,226,234,.1);}
+  .project-images{display:flex;gap:clamp(.5rem,1.5vw,1.5rem);height:clamp(300px,40vh,520px);}
+  .project-left-imgs{width:40%;display:flex;flex-direction:column;gap:clamp(.5rem,1.5vw,1.5rem);}
+  .project-left-imgs img:first-child{
+    height:38%;object-fit:cover;border-radius:40px;
+    border:.5px solid rgba(255,255,255,.1);width:100%;
+  }
+  .project-left-imgs img:last-child{
+    flex:1;object-fit:cover;border-radius:40px;
+    border:.5px solid rgba(255,255,255,.1);width:100%;
+  }
+  .project-right-img{
+    width:60%;object-fit:cover;border-radius:40px;
+    border:.5px solid rgba(255,255,255,.1);
+  }
+
+  /* ---------- CONTACT ---------- */
+  #contact{
+    background:#0C0C0C;min-height:60vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:5rem 2rem;position:relative;z-index:20;
+    border-top:.5px solid rgba(255,255,255,.1);
+  }
+  .contact-title{
+    font-size:clamp(3rem,12vw,10rem);
+    margin-bottom:clamp(2rem,4vw,4rem);text-align:center;
+  }
+  .contact-links{display:flex;flex-direction:column;align-items:center;gap:1.5rem;}
+  .contact-links a{
+    color:#D7E2EA;font-weight:500;
+    font-size:clamp(1rem,2.5vw,2rem);
+    text-decoration:none;transition:color .2s;
+  }
+  .contact-links a:hover{color:#BE4C00;}
+  .contact-links .gh-link{
+    color:rgba(215,226,234,.6);font-weight:700;
+    text-transform:uppercase;letter-spacing:.2em;
+    font-size:clamp(.75rem,1.1vw,.95rem);margin-top:.5rem;
+  }
+  .contact-links .gh-link:hover{color:#D7E2EA;}
+  .copyright{
+    position:absolute;bottom:1.5rem;
+    color:rgba(215,226,234,.4);font-size:.8rem;
+    text-transform:uppercase;letter-spacing:.15em;font-weight:300;
+  }
+
+  /* ---------- FADE IN ANIMATION ---------- */
+  .fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+  .fade-in-x-neg{opacity:0;transform:translateX(-80px);transition:opacity .9s ease,transform .9s ease;}
+  .fade-in-x-neg.visible{opacity:1;transform:translateX(0);}
+  .fade-in-x-pos{opacity:0;transform:translateX(80px);transition:opacity .9s ease,transform .9s ease;}
+  .fade-in-x-pos.visible{opacity:1;transform:translateX(0);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:640px){
+    nav{padding:1.2rem 1.5rem;}
+    .hero-body{padding-left:1.5rem;padding-right:1.5rem;}
+    .hero-bottom{padding:0 1.5rem 2rem;}
+    .hero-title{font-size:15vw;}
+    .deco-bl,.deco-br{display:none;}
+    #skills{border-radius:30px 30px 0 0;padding:3rem 1.2rem 3rem;}
+    .skill-item{flex-direction:column;align-items:flex-start;gap:.5rem;}
+    #projects{border-radius:30px 30px 0 0;}
+    .project-card{border-radius:30px;padding:1rem;}
+    .project-header{flex-direction:column;align-items:flex-start;}
+    .project-images{height:240px;}
+    .project-left-imgs img:first-child,.project-left-imgs img:last-child{border-radius:20px;}
+    .project-right-img{border-radius:20px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<section id="hero">
+  <nav class="fade-in" style="transition-delay:0s">
+    <button onclick="scrollTo('about')">About</button>
+    <button onclick="scrollTo('skills')">Skills</button>
+    <button onclick="scrollTo('projects')">Projects</button>
+    <button onclick="scrollTo('contact')">Contact</button>
+  </nav>
+
+  <div class="hero-body">
+    <div class="hero-title-wrap">
+      <div class="hero-title fade-in" style="transition-delay:.15s">Hi, i'm Ahmed</div>
+    </div>
+    <div class="hero-bottom" style="padding-left:0;padding-right:0;">
+      <p class="hero-desc fade-in" style="transition-delay:.35s">
+        a web developer crafting clean, modern, and memorable digital experiences
+      </p>
+      <button class="contact-btn fade-in" style="transition-delay:.5s" onclick="scrollTo('contact')">Contact Me</button>
+    </div>
+  </div>
+
+  <!-- Portrait with magnet effect -->
+  <div class="hero-portrait" id="portrait">
+    <img src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png" alt="Ahmed Portrait" />
+  </div>
+</section>
+
+<!-- ==================== MARQUEE ==================== -->
+<section id="marquee-section">
+  <div class="marquee-row" id="row1">
+  </div>
+  <div class="marquee-row" id="row2">
+  </div>
+</section>
+
+<!-- ==================== ABOUT ==================== -->
+<section id="about">
+  <!-- Decorative elements -->
+  <div class="deco deco-tl fade-in-x-neg" style="transition-delay:.1s">
+    <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png" alt="" />
+  </div>
+  <div class="deco deco-bl fade-in-x-neg" style="transition-delay:.25s">
+    <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png" alt="" />
+  </div>
+  <div class="deco deco-tr fade-in-x-pos" style="transition-delay:.15s">
+    <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png" alt="" />
+  </div>
+  <div class="deco deco-br fade-in-x-pos" style="transition-delay:.3s">
+    <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png" alt="" />
+  </div>
+  <div class="about-content">
+    <h2 class="hero-heading about-title fade-in" style="transition-delay:0s">About me</h2>
+    <p class="about-text" id="about-text">Computer Science student at ESI-SBA, Algeria, with a passion for web development. I build clean, modern websites and apps — from clinic systems to e-commerce platforms — focused on usability, performance, and craftsmanship. Let's build something incredible together!</p>
+    <div class="about-btn-wrap fade-in" style="transition-delay:.4s">
+      <button class="contact-btn" onclick="scrollTo('contact')">Contact Me</button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SKILLS ==================== -->
+<section id="skills">
+  <h2 class="skills-title fade-in">Skills</h2>
+  <div class="skills-list">
+    <div class="skill-item fade-in" style="transition-delay:.0s">
+      <div class="skill-num">01</div>
+      <div class="skill-info">
+        <h3 class="skill-name">Frontend Development</h3>
+        <p class="skill-desc">Building responsive, performant interfaces using HTML, CSS, JavaScript, and React — with attention to pixel-perfect design and smooth user experience.</p>
+      </div>
+    </div>
+    <div class="skill-item fade-in" style="transition-delay:.1s">
+      <div class="skill-num">02</div>
+      <div class="skill-info">
+        <h3 class="skill-name">Graphic Design</h3>
+        <p class="skill-desc">Creating compelling visuals, brand identities, and digital assets — combining typography, color, and composition to communicate ideas with clarity and impact.</p>
+      </div>
+    </div>
+    <div class="skill-item fade-in" style="transition-delay:.2s">
+      <div class="skill-num">03</div>
+      <div class="skill-info">
+        <h3 class="skill-name">Podcast Presentation</h3>
+        <p class="skill-desc">Hosting and presenting podcast episodes with confidence and clarity — engaging audiences through natural delivery, thoughtful questions, and authentic on-air presence.</p>
+      </div>
+    </div>
+    <div class="skill-item fade-in" style="transition-delay:.3s">
+      <div class="skill-num">04</div>
+      <div class="skill-info">
+        <h3 class="skill-name">Problem Solving</h3>
+        <p class="skill-desc">Analytical approach to technical challenges — whether it's algorithmic puzzles, debugging, or architecting scalable systems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROJECTS ==================== -->
+<section id="projects">
+  <h2 class="hero-heading projects-title fade-in">Projects</h2>
+  <div class="project-sticky-container" id="projects-container"></div>
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section id="contact">
+  <h2 class="hero-heading contact-title fade-in">Contact</h2>
+  <div class="contact-links fade-in" style="transition-delay:.1s">
+    <a href="mailto:at.noui@esi-sba.dz">at.noui@esi-sba.dz</a>
+    <a href="tel:0553411196">0553411196</a>
+    <a href="https://github.com/atnoui" target="_blank" rel="noopener noreferrer" class="gh-link">github.com/atnoui</a>
+  </div>
+  <div class="copyright">© <span id="year"></span> Ahmed. All rights reserved.</div>
+</section>
+
+<script>
+/* ---- Helpers ---- */
+function scrollTo(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+}
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---- Fade-in observer ---- */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+  });
+},{threshold:0,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-in,.fade-in-x-neg,.fade-in-x-pos').forEach(el=>io.observe(el));
+
+/* ---- Hero initial animations ---- */
+window.addEventListener('DOMContentLoaded',()=>{
+  const els = document.querySelectorAll('#hero .fade-in');
+  els.forEach((el,i)=>{
+    setTimeout(()=>el.classList.add('visible'), i*150+100);
+  });
+});
+
+/* ---- Portrait magnet effect ---- */
+(function(){
+  const portrait = document.getElementById('portrait');
+  let mx=0,my=0;
+  window.addEventListener('mousemove',(e)=>{
+    if(!portrait) return;
+    const rect = portrait.getBoundingClientRect();
+    const cx = rect.left + rect.width/2;
+    const cy = rect.top + rect.height/2;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    const threshold = rect.width/2 + 150;
+    if(dist < threshold){
+      mx = dx/3; my = dy/3;
+      portrait.style.transition = 'transform .3s ease-out';
+    } else {
+      mx=0;my=0;
+      portrait.style.transition = 'transform .6s ease-in-out';
+    }
+    portrait.style.transform = `translateX(calc(-50% + ${mx}px)) translateY(${my}px)`;
+  });
+})();
+
+/* ---- Marquee rows with scroll parallax ---- */
+(function(){
+  const ROW1 = [
+    "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
+    "https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif",
+    "https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif",
+    "https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif",
+    "https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
+    "https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
+    "https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif",
+    "https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif",
+    "https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif",
+    "https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
+    "https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif"
+  ];
+  const ROW2 = [
+    "https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif",
+    "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
+    "https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
+    "https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
+    "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
+    "https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif",
+    "https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif",
+    "https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif",
+    "https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif",
+    "https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif"
+  ];
+  const triple = arr => [...arr,...arr,...arr];
+  const r1 = document.getElementById('row1');
+  const r2 = document.getElementById('row2');
+  triple(ROW1).forEach(src=>{
+    const img = document.createElement('img');
+    img.src=src;img.alt='';img.loading='lazy';img.setAttribute('aria-hidden','true');r1.appendChild(img);
+  });
+  triple(ROW2).forEach(src=>{
+    const img = document.createElement('img');
+    img.src=src;img.alt='';img.loading='lazy';img.setAttribute('aria-hidden','true');r2.appendChild(img);
+  });
+
+  const sec = document.getElementById('marquee-section');
+  let raf;
+  function updateMarquee(){
+    const sectionTop = sec.offsetTop || 0;
+    const offset = (window.scrollY - sectionTop + window.innerHeight)*0.3;
+    r1.style.transform=`translate3d(${offset-200}px,0,0)`;
+    r2.style.transform=`translate3d(${-(offset-200)}px,0,0)`;
+  }
+  window.addEventListener('scroll',()=>{raf=requestAnimationFrame(updateMarquee);},{passive:true});
+  updateMarquee();
+})();
+
+/* ---- Animated text in About (character reveal on scroll) ---- */
+(function(){
+  const container = document.getElementById('about-text');
+  if(!container) return;
+  const text = container.textContent;
+  container.innerHTML = '';
+  const chars = text.split('');
+  const spans = chars.map(c=>{
+    const outer = document.createElement('span');
+    outer.style.cssText='position:relative;display:inline-block;white-space:pre;';
+    const ghost = document.createElement('span');
+    ghost.style.visibility='hidden';ghost.textContent=c;
+    const real = document.createElement('span');
+    real.style.cssText='position:absolute;top:0;left:0;opacity:.2;transition:opacity .3s;';
+    real.textContent=c;
+    outer.appendChild(ghost);outer.appendChild(real);
+    container.appendChild(outer);
+    return real;
+  });
+
+  function updateChars(){
+    const rect = container.getBoundingClientRect();
+    const viewH = window.innerHeight;
+    const start = viewH*0.8;
+    const end = viewH*0.2;
+    const progress = Math.max(0,Math.min(1,(start-rect.top)/(start-end+(rect.height))));
+    spans.forEach((s,i)=>{
+      const charProgress = i/spans.length;
+      s.style.opacity = progress > charProgress ? '1' : '0.2';
+    });
+  }
+  window.addEventListener('scroll',updateChars,{passive:true});
+  updateChars();
+})();
+
+/* ---- Projects with sticky stacking + scale ---- */
+(function(){
+  const PROJECTS = [
+    {
+      num:"01",field:"Web Development",category:"Personal Project",name:"Clinic System",
+      url:"https://atnoui.github.io/Clinic-system/",type:"images",
+      images:{
+        leftTop:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
+        leftBottom:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
+        right:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85"
+      }
+    },
+    {
+      num:"02",field:"Web Development",category:"E-Commerce",name:"A2 Accessories",
+      url:"https://atnoui.github.io/a2-accessories/",type:"images",
+      images:{
+        leftTop:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
+        leftBottom:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
+        right:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85"
+      }
+    },
+    {
+      num:"03",field:"Web Development",category:"Web App",name:"Tomouh Registration",
+      url:"https://atnoui.github.io/tomouh_registration/",type:"images",
+      images:{
+        leftTop:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
+        leftBottom:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
+        right:"https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85"
+      }
+    },
+    {
+      num:"04",field:"Podcast Presentation",category:"Video Content",name:"Podcast Episode #1",
+      type:"video",videoId:"kyRjXYdffzY",url:"https://youtu.be/kyRjXYdffzY"
+    },
+    {
+      num:"05",field:"Podcast Presentation",category:"Video Content",name:"Podcast Episode #2",
+      type:"video",videoId:"ju-vEe4z1TU",url:"https://youtu.be/ju-vEe4z1TU"
+    }
+  ];
+
+  const container = document.getElementById('projects-container');
+  const TOTAL = PROJECTS.length;
+
+  PROJECTS.forEach((p,i)=>{
+    const topOffset = 100 + i*28;
+    const targetScale = 1-(TOTAL-1-i)*0.03;
+
+    const wrap = document.createElement('div');
+    wrap.className='project-card-wrap';
+    wrap.style.top=topOffset+'px';
+
+    const card = document.createElement('div');
+    card.className='project-card';
+    card.dataset.index=i;
+    card.dataset.targetScale=targetScale;
+
+    const thumbHq  = `https://i.ytimg.com/vi/${p.videoId}/hqdefault.jpg`;
+    const thumbMax = `https://i.ytimg.com/vi/${p.videoId}/maxresdefault.jpg`;
+    card.innerHTML = p.type === 'video' ? `
+      <div class="project-header">
+        <div class="project-header-left">
+          <div class="project-num">${p.num}</div>
+          <div class="project-meta">
+            <span class="project-field">${p.field}</span>
+            <span class="project-category">${p.category}</span>
+            <h3 class="project-name">${p.name}</h3>
+          </div>
+        </div>
+        <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="live-btn">Watch Video</a>
+      </div>
+      <div class="project-images">
+        <div class="project-left-imgs">
+          <img src="${thumbHq}" alt="${p.name} thumbnail top" loading="lazy"
+               onerror="this.src='${thumbHq}'" />
+          <img src="${thumbHq}" alt="${p.name} thumbnail bottom" loading="lazy"
+               onerror="this.src='${thumbHq}'" />
+        </div>
+        <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="project-video-thumb-link">
+          <img src="${thumbMax}" alt="${p.name} main thumbnail" class="project-right-img"
+               onerror="this.src='${thumbHq}'" />
+          <div class="play-overlay">
+            <div class="play-btn">&#9654;</div>
+          </div>
+        </a>
+      </div>
+    ` : `
+      <div class="project-header">
+        <div class="project-header-left">
+          <div class="project-num">${p.num}</div>
+          <div class="project-meta">
+            <span class="project-field">${p.field}</span>
+            <span class="project-category">${p.category}</span>
+            <h3 class="project-name">${p.name}</h3>
+          </div>
+        </div>
+        <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="live-btn">Live Project</a>
+      </div>
+      <div class="project-images">
+        <div class="project-left-imgs">
+          <img src="${p.images.leftTop}" alt="${p.name} preview 1" loading="lazy" />
+          <img src="${p.images.leftBottom}" alt="${p.name} preview 2" loading="lazy" />
+        </div>
+        <img src="${p.images.right}" alt="${p.name} main preview" class="project-right-img" loading="lazy" />
+      </div>
+    `;
+
+    wrap.appendChild(card);
+    container.appendChild(wrap);
+  });
+
+  /* Scale transform on scroll */
+  function updateProjectScales(){
+    const secEl = document.getElementById('projects');
+    const secTop = secEl.getBoundingClientRect().top + window.scrollY;
+    const secH = container.scrollHeight + secEl.getBoundingClientRect().height;
+    const scrolled = window.scrollY - secTop;
+    const progress = Math.max(0,Math.min(1, scrolled/secH));
+
+    document.querySelectorAll('.project-card').forEach(card=>{
+      const idx = parseInt(card.dataset.index);
+      const ts = parseFloat(card.dataset.targetScale);
+      const start = idx*0.25;
+      const localProgress = Math.max(0,Math.min(1,(progress-start)/0.75));
+      const scale = 1+(ts-1)*localProgress;
+      card.style.transform=`scale(${scale})`;
+    });
+  }
+  window.addEventListener('scroll',updateProjectScales,{passive:true});
+  updateProjectScales();
+})();
+</script>
+</body>
+</html>
